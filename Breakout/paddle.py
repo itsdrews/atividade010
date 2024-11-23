@@ -1,11 +1,11 @@
 
 
 class Paddle:
-    def __init__(self,x,y,width,height):
+    def __init__(self,center_x,center_y,width,height):
         self.width = width
         self.height = height
-        self.center_x = x
-        self.center_y = y
+        self.center_x = center_x
+        self.center_y = center_y
         self.color = 'Blue'
         self.speed = None
 
