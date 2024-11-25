@@ -1,4 +1,4 @@
-from ball import Ball
+
 
 class Walls:
     def __init__(self,x,y,width,height):

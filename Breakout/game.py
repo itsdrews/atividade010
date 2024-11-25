@@ -17,8 +17,6 @@ PADDLE_CENTER_X = WINDOW_WIDTH //2
 PADDLE_CENTER_Y = WINDOW_HEIGHT - 100
 BALL_RADIUS = 2
 BALL_COLOR = 'white'
-BALL_CENTER_X = WINDOW_WIDTH //2
-BALL_CENTER_Y = WINDOW_HEIGHT - PADDLE_HEIGHT
 BALL_SPEED = 5
 
 #Blocks
@@ -69,11 +67,7 @@ class Game:
         ball_is_ghost = False
         print("game is running")
         while self.running:
-            time.sleep(1)
-            if score.max_score():
-                print('WIN!!')
-                self.stop()
-                break
+            time.sleep(0.1)
 
 
             paddle.handle_controls()
@@ -126,8 +120,8 @@ class Game:
         self.running = True
         while self.running:
             ball.move()
-            ball.hit_wall(left_wall, right_wall, upper_wall)
-            ball.hit_paddle(paddle)
+            ball.hit_wall(left_wall, right_wall, upper_wall,ghost = False)
+            ball.hit_paddle(paddle,ghost = False)
 
             if keyboard.is_pressed('esc'):
                 self.stop()
