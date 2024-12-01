@@ -79,19 +79,7 @@ class Game:
             ball.hit_wall(left_wall, right_wall, upper_wall,ball_is_ghost)
             ball.hit_paddle(paddle,ball_is_ghost)
 
-            if self.check_hit(ball,yellow_blocks):
-                ball_is_ghost= score.update_score('yellow')
-                ball.toggle_ghost()
-
-            if self.check_hit(ball,green_blocks):
-                ball_is_ghost = score.update_score('green')
-                ball.toggle_ghost()
-            if self.check_hit(ball,orange_blocks):
-                ball_is_ghost =score.update_score('orange')
-                ball.toggle_ghost()
-            if self.check_hit(ball,red_blocks):
-                ball_is_ghost = score.update_score('red')
-                ball.toggle_ghost()
+            self.check_hit(ball,yellow_blocks)
 
             if keyboard.is_pressed('esc'):
                 self.stop()
@@ -116,12 +104,16 @@ class Game:
 
 
 
-
+        ball_is_ghost = False
         self.running = True
         while self.running:
             ball.move()
             ball.hit_wall(left_wall, right_wall, upper_wall,ghost = False)
             ball.hit_paddle(paddle,ghost = False)
+
+
+            self.check_hit(ball,yellow_blocks)
+
 
             if keyboard.is_pressed('esc'):
                 self.stop()
