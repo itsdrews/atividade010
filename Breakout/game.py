@@ -67,20 +67,37 @@ class Game:
         ball_is_ghost = False
         print("game is running")
         while self.running:
-            time.sleep(0.1)
-
+            time.sleep(0.2)
 
             paddle.handle_controls()
             paddle.check_max_min(left_wall,right_wall)
             ball.move()
             print(ball)
-            print(score)
             print(paddle)
             ball.hit_wall(left_wall, right_wall, upper_wall,ball_is_ghost)
             ball.hit_paddle(paddle,ball_is_ghost)
 
-            self.check_hit(ball,yellow_blocks)
+            check_1 = self.check_hit(ball, yellow_blocks)
+            check_2 = self.check_hit(ball, green_blocks)
+            check_3 = self.check_hit(ball, orange_blocks)
+            check_4 = self.check_hit(ball, red_blocks)
+            if check_1:
+                score.update_score('yellow')
+                ball.toggle_ghost()
+            if check_2:
+                score.update_score('green')
+                ball.toggle_ghost()
+            if check_3:
+                score.update_score('orange')
+                ball.toggle_ghost()
+            if check_4:
+                score.update_score('red')
+                ball.toggle_ghost()
 
+            print(score)
+            if score.max_score == 448:
+                print("MAX SCORE!!! GAME OVER!")
+                self.stop()
             if keyboard.is_pressed('esc'):
                 self.stop()
 
@@ -102,18 +119,36 @@ class Game:
         orange_blocks = self.create_blocks_row(140,'orange',Block)
         red_blocks = self.create_blocks_row(110,'red',Block)
 
+        score = Score()
 
 
         ball_is_ghost = False
         self.running = True
         while self.running:
+            time.sleep(0.2)
             ball.move()
             ball.hit_wall(left_wall, right_wall, upper_wall,ghost = False)
             ball.hit_paddle(paddle,ghost = False)
 
 
-            self.check_hit(ball,yellow_blocks)
+            check_1 = self.check_hit(ball, yellow_blocks)
+            check_2 = self.check_hit(ball, green_blocks)
+            check_3 = self.check_hit(ball, orange_blocks)
+            check_4 = self.check_hit(ball, red_blocks)
+            if check_1:
+                score.update_score('yellow')
+                ball.toggle_ghost()
+            if check_2:
+                score.update_score('green')
+                ball.toggle_ghost()
+            if check_3:
+                score.update_score('orange')
+                ball.toggle_ghost()
+            if check_4:
+                score.update_score('red')
+                ball.toggle_ghost()
 
+            print(score)
 
             if keyboard.is_pressed('esc'):
                 self.stop()
@@ -148,7 +183,7 @@ class Game:
                 if check:
                     ball.set_speed(block_list[i].color, ball.x_speed)
                     del block_list[i]
-                    break
+                    return True
 
 
 

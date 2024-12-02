@@ -6,4 +6,4 @@ def main():
     game.idle_screen ()
 
 if __name__ == '__main__':
-          main()
+             main()

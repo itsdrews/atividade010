@@ -62,21 +62,25 @@ class Game:
 
 
     def idle_screen(self):
-        self.idle = True
+        self.idle = False
         print('Game Idle Screen')
         screen = self.create_objects(Ball,Paddle,Paddle)
         ball = screen[0]
         player_1 = screen[1]
         player_2 = screen[2]
-
+        score = Score()
         self.running = True
         while self.running:
+            time.sleep(0.2)
             ball.reflect(0,WINDOW_HEIGHT)
             ball.move()
             ball.hit_paddle(player_1,player_2)
             player_1.handle_controls()
             player_2.handle_controls()
+            ball.score_condition(player_1,player_2, score)
+
             print(ball)
+            print(score)
 
             if keyboard.is_pressed('esc'):
                 break

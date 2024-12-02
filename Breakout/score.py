@@ -4,6 +4,7 @@ class Score:
     def __init__(self):
         self.color = 'white'
         self.points = 0
+        self.max_score = 448
 
     def __str__(self):
         return f'Actual Score: {self.points}'
@@ -22,11 +23,6 @@ class Score:
             self.points +=0
         return True
 
-
-    def max_score(self):
-        if self.points == 448:
-            self.points = 0
-        return True
 
 
 

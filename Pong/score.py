@@ -5,6 +5,7 @@ class Score:
         self.color = 'white'
         self.player_1_points = 0
         self.player_2_points = 0
+        self.max_score = 5
 
     def __str__(self):
         return (f'Player 1: {self.player_1_points} \n'
