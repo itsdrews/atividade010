@@ -116,10 +116,10 @@ class Game:
         right_wall = screen[2]
         upper_wall = screen[3]
         paddle = screen[4]
-        yellow_blocks = self.create_blocks_row(200,'yellow',Block)
-        green_blocks = self.create_blocks_row(170,'green',Block)
-        orange_blocks = self.create_blocks_row(140,'orange',Block)
-        red_blocks = self.create_blocks_row(110,'red',Block)
+        yellow_blocks = self.create_blocks_row(200,'yellow')
+        green_blocks = self.create_blocks_row(170,'green')
+        orange_blocks = self.create_blocks_row(140,'orange')
+        red_blocks = self.create_blocks_row(110,'red')
 
         score = Score()
 
@@ -168,7 +168,7 @@ class Game:
         print("game has stopped")
 
     #creates the block rows
-    def create_blocks_row(self,y,color,block:Block):
+    def create_blocks_row(self,y,color):
         block_rows =[]
         for i in range(14):
             block_down=Block(100 + i*5,y,color)
