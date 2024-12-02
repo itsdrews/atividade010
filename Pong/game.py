@@ -20,8 +20,11 @@ class Game:
     def __init__(self):
         self.running = False
         self.idle = False
+        self.ball = Ball
+        self.paddle = Paddle
+        self.score = Score
 
-    def create_objects(self,ball:Ball,paddle_1:Paddle,paddle_2:Paddle):
+    def create_objects(self):
         ball = Ball( x=640, y=randint(10, WINDOW_HEIGHT-10), radius=BALL_RADIUS, color=BALL_COLOR,speed=BALL_SPEED)
         if self.idle:
             paddle_1 = Paddle(center_x=75, center_y=WINDOW_HEIGHT // 2, width=PADDLE_WIDTH, height=WINDOW_HEIGHT)
@@ -35,7 +38,7 @@ class Game:
 
     def start(self):
         print('Game Started.')
-        screen = self.create_objects(Ball, Paddle, Paddle)
+        screen = self.create_objects()
         ball = screen[0]
         player_1 = screen[1]
         player_2 = screen[2]
@@ -50,6 +53,7 @@ class Game:
             player_2.handle_controls()
             ball.score_condition(player_1,player_2, score)
             print(ball)
+            self.game_over(score)
 
             if keyboard.is_pressed('esc'):
                 self.running = False
@@ -64,7 +68,7 @@ class Game:
     def idle_screen(self):
         self.idle = False
         print('Game Idle Screen')
-        screen = self.create_objects(Ball,Paddle,Paddle)
+        screen = self.create_objects()
         ball = screen[0]
         player_1 = screen[1]
         player_2 = screen[2]
@@ -87,3 +91,13 @@ class Game:
             elif keyboard.is_pressed('space'):
                 self.idle = False
                 self.start()
+
+    def game_over(self,score:Score):
+        if score.player_1_points >= score.max_score:
+            print("Player 1 Wins!")
+            self.stop()
+
+
+        elif score.player_2_points >= score.max_score:
+            print("Player 2 Wins!")
+            self.stop()

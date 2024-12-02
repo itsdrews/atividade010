@@ -30,7 +30,7 @@ red_blocks = []
 class Game:
     def __init__(self):
         self.running = False
-        self.idle = True
+        self.idle = None
         self.ball = Ball
         self.paddle = Paddle
         self.wall = Walls
@@ -43,10 +43,10 @@ class Game:
         left_wall = Walls(x=100, y=0, width=10, height=WINDOW_HEIGHT)
         right_wall = Walls(x=700, y=0, width=10, height=WINDOW_HEIGHT)
         upper_wall = Walls(x=0, y=0, width=WINDOW_WIDTH, height=10)
-        if self.idle == False:
-            paddle = Paddle(center_x=PADDLE_CENTER_X, center_y=PADDLE_CENTER_Y, width=PADDLE_WIDTH, height=PADDLE_HEIGHT)
+        if self.idle:
+            paddle = Paddle(center_x=PADDLE_CENTER_X, center_y=PADDLE_CENTER_Y, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
         else:
-            paddle = Paddle(center_x=PADDLE_CENTER_X, center_y=PADDLE_CENTER_Y, width=WINDOW_WIDTH, height=PADDLE_HEIGHT)
+            paddle = Paddle(center_x=PADDLE_CENTER_X, center_y=PADDLE_CENTER_Y, width=PADDLE_WIDTH, height=PADDLE_HEIGHT)
 
         return [ball,left_wall,right_wall,upper_wall,paddle]
 
@@ -61,20 +61,20 @@ class Game:
         right_wall = screen[2]
         upper_wall = screen[3]
         paddle = screen[4]
-        yellow_blocks = self.create_blocks_row(200, 'yellow', Block)
-        green_blocks = self.create_blocks_row(170, 'green', Block)
-        orange_blocks = self.create_blocks_row(140, 'orange', Block)
-        red_blocks = self.create_blocks_row(110, 'red', Block)
+        yellow_blocks = self.create_blocks_row(200, 'yellow')
+        green_blocks = self.create_blocks_row(170, 'green')
+        orange_blocks = self.create_blocks_row(140, 'orange')
+        red_blocks = self.create_blocks_row(110, 'red')
 
         ball_is_ghost = False
         print("game is running")
         while self.running:
-            time.sleep(0.2)
-
+            time.sleep(0.3)
             paddle.handle_controls()
             paddle.check_max_min(left_wall,right_wall)
             ball.move()
             print(ball)
+            self.handle_game_over(ball)
             print(paddle)
             ball.hit_wall(left_wall, right_wall, upper_wall,ball_is_ghost)
             ball.hit_paddle(paddle,ball_is_ghost)
@@ -96,6 +96,7 @@ class Game:
                 score.update_score('red')
                 ball.toggle_ghost()
 
+
             print(score)
             if score.points == score.max_score:
                 print("MAX SCORE!!! GAME OVER!")
@@ -110,6 +111,7 @@ class Game:
 
     #runs idle screen while not playing
     def idle_screen(self):
+        self.idle = True
         screen = self.create_screen_objects()
         ball = screen[0]
         left_wall = screen[1]
@@ -122,7 +124,6 @@ class Game:
         red_blocks = self.create_blocks_row(110,'red')
 
         score = Score()
-
 
         ball_is_ghost = False
         self.running = True
@@ -190,7 +191,9 @@ class Game:
                     del block_list[i]
                     return True
 
-
+    def handle_game_over(self,ball: Ball):
+        if ball.reset == 3:
+            self.stop()
 
 
 

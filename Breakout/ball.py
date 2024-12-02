@@ -11,7 +11,7 @@ class Ball:
         self.y_speed = speed
         self.x_speed = speed
         self.ghost = False
-
+        self.reset = 0
     #print ball position
     def __str__(self):
         return f'Ball is in {self.x}, {self.y}, speed {self.x_speed}, {self.y_speed}'
@@ -41,13 +41,13 @@ class Ball:
 
     #check if ball hit paddle
     def hit_paddle(self,paddle: Paddle,ghost):
-        if self.x <= (paddle.center_x - paddle.width//2) and self.y >= (paddle.center_y):
+        if self.x <= (paddle.center_x - paddle.width//2) and self.y == paddle.center_y:
             print('Hit paddle!')
             self.set_speed('paddle',self.x_speed)
             self.y = paddle.center_y - paddle.height//2 - self.radius
             if ghost:
                 self.toggle_ghost()
-        elif self.x >= (paddle.width//2 - paddle.center_x) and self.y >= paddle.center_y:
+        elif self.x >= (paddle.width//2 - paddle.center_x) and self.y == paddle.center_y:
             print('Hit paddle!')
             self.set_speed('paddle',self.x_speed)
             self.y = paddle.center_y - paddle.height//2 - self.radius
@@ -55,6 +55,7 @@ class Ball:
                 self.toggle_ghost()
         elif self.y >= paddle.center_y:
             print('Paddle Miss')
+            self.reset +=1
             self.reset_ball()
 
     def hit_block(self,block:Block):
@@ -113,6 +114,13 @@ class Ball:
     def toggle_ghost(self):
         self.ghost = not self.ghost
         print(f'Ball is ghost = {self.ghost} ')
+
+
+    def off_limits(self,max_y):
+        if self.y >=  max_y:
+            return True
+        else:
+            return False
 
 
 

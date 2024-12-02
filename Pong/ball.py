@@ -24,12 +24,12 @@ class Ball:
 
     #check if ball hit paddle
     def hit_paddle(self,paddle_1: Paddle,paddle_2: Paddle):
-        if (self.x <=paddle_1.center_x - paddle_1.width//2):
+        if self.x <=paddle_1.center_x - paddle_1.width//2:
             if (self.y >=paddle_1.center_y - paddle_1.height//2) and (self.y <= paddle_1.center_y +paddle_1.height//2):
                 print('Hit paddle 1')
                 self.x_speed = -self.x_speed
 
-        if (self.x >=paddle_2.center_x - paddle_2.width//2):
+        if self.x >=paddle_2.center_x - paddle_2.width//2:
             if (self.y >=paddle_2.center_y - paddle_2.height//2) and (self.y <= paddle_2.center_y +paddle_2.height//2):
                 print('Hit paddle 2')
                 self.x_speed = -self.x_speed
