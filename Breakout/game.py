@@ -31,11 +31,13 @@ class Game:
     def __init__(self):
         self.running = False
         self.idle = True
+        self.ball = Ball
+        self.paddle = Paddle
+        self.wall = Walls
 
 
     #draw all screen objects
-    def create_screen_objects(self,ball : Ball,left_wall:Walls,right_wall:Walls,
-                              uper_wall: Walls,paddle:Paddle):
+    def create_screen_objects(self):
 
         ball = Ball(x=randint(0, WINDOW_WIDTH), y=randint(210, WINDOW_HEIGHT-300), radius=BALL_RADIUS, color=BALL_COLOR,speed=BALL_SPEED)
         left_wall = Walls(x=100, y=0, width=10, height=WINDOW_HEIGHT)
@@ -53,7 +55,7 @@ class Game:
         self.running = True
         self.idle = False
         score = Score()
-        screen = self.create_screen_objects(Ball, Walls, Walls, Walls, Paddle)
+        screen = self.create_screen_objects()
         ball = screen[0]
         left_wall = screen[1]
         right_wall = screen[2]
@@ -95,7 +97,7 @@ class Game:
                 ball.toggle_ghost()
 
             print(score)
-            if score.max_score == 448:
+            if score.points == score.max_score:
                 print("MAX SCORE!!! GAME OVER!")
                 self.stop()
             if keyboard.is_pressed('esc'):
@@ -108,7 +110,7 @@ class Game:
 
     #runs idle screen while not playing
     def idle_screen(self):
-        screen = self.create_screen_objects(Ball,Walls,Walls,Walls,Paddle)
+        screen = self.create_screen_objects()
         ball = screen[0]
         left_wall = screen[1]
         right_wall = screen[2]
@@ -125,7 +127,7 @@ class Game:
         ball_is_ghost = False
         self.running = True
         while self.running:
-            time.sleep(0.2)
+            time.sleep(0.1)
             ball.move()
             ball.hit_wall(left_wall, right_wall, upper_wall,ghost = False)
             ball.hit_paddle(paddle,ghost = False)
@@ -149,6 +151,9 @@ class Game:
                 ball.toggle_ghost()
 
             print(score)
+            if score.points == score.max_score:
+                print("MAX SCORE!!! GAME OVER!")
+                self.stop()
 
             if keyboard.is_pressed('esc'):
                 self.stop()
